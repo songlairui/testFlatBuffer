@@ -1,0 +1,9 @@
+namespace My.frame;
+
+table Example {
+  x: float;
+  y: float;
+  imgdata: [ubyte];
+}
+
+root_type Example;

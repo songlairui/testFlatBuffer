@@ -1,0 +1,21 @@
+const flatbuffers = require('flatbuffers').flatbuffers
+const { My } = require('./example_generated')
+const fs = require('fs')
+var builder = new flatbuffers.Builder(0)
+
+let imgdata = new Uint8Array([123,234,34,56])
+var imgdataV = My.frame.Example.createImgdataVector(builder,imgdata)
+console.log('created imgdataVector:',imgdata)
+My.frame.Example.startExample(builder)
+My.frame.Example.addImgdata(builder,imgdataV)
+console.log('imgdataVector added')
+My.frame.Example.addX(builder,123)
+console.log('x:123 added')
+My.frame.Example.addY(builder,8.123)
+console.log('y:8.123 added')
+var end = My.frame.Example.endExample(builder)
+
+builder.finish(end)
+var buf = builder.asUint8Array()
+fs.writeFileSync('./result.buf',Buffer.from(buf))
+console.log('buf file writed')
